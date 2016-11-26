@@ -114,4 +114,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/newitem/{id}', 'InvoicesController@newItem')->name('invoice.new.item');
     });
         Route::resource('invoices', 'InvoicesController');
+
+    /**
+     * Search
+     */
+        Route::get('/search/{query}', 'SearchController@index'); 
+
 });

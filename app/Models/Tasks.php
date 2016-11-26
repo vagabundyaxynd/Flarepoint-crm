@@ -3,10 +3,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon;
+use Laravel\Scout\Searchable;
 
 class Tasks extends Model
 {
-
+    use Searchable;
+    
     protected $fillable = [
         'title',
         'description',

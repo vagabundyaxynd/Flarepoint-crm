@@ -23,7 +23,9 @@
         "yajra/laravel-datatables-oracle": "~6.0",
         "guzzlehttp/guzzle": "^6.2",
         "pusher/pusher-php-server": "^2.3",
-        "zizaco/entrust": "1.7.*"
+        "zizaco/entrust": "1.7.*",
+        "laravel/scout": "^1.1",
+        "algolia/algoliasearch-client-php": "^1.11"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
