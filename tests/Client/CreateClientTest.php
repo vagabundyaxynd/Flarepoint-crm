@@ -1,7 +1,5 @@
  <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\User;
 use App\Models\Role;
@@ -96,5 +94,6 @@ class CreateClientTest extends TestCase
             ->press('Create New Client')
             ->see('Client successfully added')
             ->seePageIs('/clients');
+
     }
 }
