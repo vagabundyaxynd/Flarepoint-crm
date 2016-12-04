@@ -4,6 +4,9 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\User;
+use App\Models\Role;
+use App\Models\RoleUser;
+use App\Models\PermissionRole;
 
 class LoginTest extends TestCase
 {
@@ -20,12 +23,14 @@ class LoginTest extends TestCase
     }
 
     public function testLoginWithCorrectPassword()
-    {
-        User::create([
-            'name' => 'Casper',
-            'email' => 'bottelet@flarepoint.com',
-            'password' => bcrypt('admin')
-        ]);
+    {  
+     //Create a user for loggin in
+        $user = new User;
+        $user->name = 'Casper';
+        $user->email = 'bottelet@flarepoint.com';
+        $user->password = bcrypt('admin');
+        $user->save();
+
         $this->visit('/')
             ->seePageIs('/login')
             ->type('bottelet@flarepoint.com', 'email')
