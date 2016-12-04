@@ -1,4 +1,4 @@
-<div id="docuemnt" class="tab-pane fade">
+<div id="document" class="tab-pane fade">
   <table class="table">
     <h4>@lang('client.tabs.all_documents')</h4>
     <div class="col-xs-10">
