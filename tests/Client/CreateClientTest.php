@@ -10,8 +10,12 @@ class CreateClientTest extends TestCase
 {
     use DatabaseTransactions;
 
-    public function testCanNotAccessCreatePageWithOutPermission()
+
+    protected $role;
+
+    public function setup()
     {
+        parent::setup();
         //Create a user for loggin in without permissions
         $user = new User;
         $user->name = 'Casper';
@@ -19,18 +23,22 @@ class CreateClientTest extends TestCase
         $user->password = bcrypt('admin');
         $user->save();
 
-        $role = new Role;
-        $role->display_name = 'Test role';
-        $role->name = 'Test Role';
-        $role->description = 'Role for testing';
-        $role->save();
+        $this->role = new Role;
+        $this->role->display_name = 'Test role';
+        $this->role->name = 'Test Role';
+        $this->role->description = 'Role for testing';
+        $this->role->save();
  
         $newrole = new RoleUser;
-        $newrole->role_id = $role->id;
+        $newrole->role_id = $this->role->id;
         $newrole->user_id = $user->id;
         $newrole->timestamps = false;
         $newrole->save();
 
+    }
+
+    public function testCanNotAccessCreatePageWithOutPermission()
+    {
         $this->visit('/')
             ->seePageIs('/login')
             ->type('bottelet@flarepoint.com', 'email')
@@ -45,28 +53,10 @@ class CreateClientTest extends TestCase
 
     public function testCanCreateClientWithPermission()
     {
-         $faker = \Faker\Factory::create();
-        //Create a user for loggin in without permissions
-        $user = new User;
-        $user->name = 'Casper';
-        $user->email = 'bottelet@flarepoint.com';
-        $user->password = bcrypt('admin');
-        $user->save();
-
-        $role = new Role;
-        $role->display_name = 'Test role';
-        $role->name = 'Test Role';
-        $role->description = 'Role for testing';
-        $role->save();
- 
-        $newRole = new RoleUser;
-        $newRole->role_id = $role->id;
-        $newRole->user_id = $user->id;
-        $newRole->timestamps = false;
-        $newRole->save();
+        $faker = \Faker\Factory::create();
 
         $createClient = new PermissionRole;
-        $createClient->role_id = $role->id;
+        $createClient->role_id = $this->role->id;
         $createClient->permission_id = '4';
         $createClient->timestamps = false;
         $createClient->save();
@@ -84,7 +74,7 @@ class CreateClientTest extends TestCase
             ->type($faker->address, 'address')
             ->type($faker->randomNumber(8), 'vat')
             ->type($faker->company('name'), 'company_name')
-            ->type($faker->postcode(), 'zipcode')
+            ->type($faker->randomNumber(4), 'zipcode')
             ->type($faker->city(), 'city')
             ->type($faker->randomNumber(8), 'primary_number')
             ->type($faker->randomNumber(8), 'secondary_number')
