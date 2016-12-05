@@ -18,45 +18,12 @@ class FormValidationErrorClientTest extends TestCase
     public function setup()
     {
         parent::setup();
+        App::setLocale('en');
 
-        $this->faker = \Faker\Factory::create();
-
-        //Create a user for loggin in without permissions
-        $user = new User;
-        $user->name = 'Casper';
-        $user->email = 'bottelet@flarepoint.com';
-        $user->password = bcrypt('admin');
-        $user->save();
-
-        //Create test client
-        $this->client = New Client;
-        $this->client->name = $this->faker->name;
-        $this->client->company_name = $this->faker->company('name');
-        $this->client->email = $this->faker->email;
-        $this->client->industry_id = $this->faker->numberBetween($min = 1, $max = 25);
-        $this->client->fk_user_id = $user->id;
-        $this->client->save();
-
-        //Create Role
-        $this->role = new Role;
-        $this->role->display_name = 'Test role';
-        $this->role->name = 'Test Role';
-        $this->role->description = 'Role for testing';
-        $this->role->save();
-
-        $newrole = new RoleUser;
-        $newrole->role_id = $this->role->id;
-        $newrole->user_id = $user->id;
-        $newrole->timestamps = false;
-        $newrole->save();
-
-        $createClient = new PermissionRole;
-        $createClient->role_id = $this->role->id;
-        $createClient->permission_id = '4';
-        $createClient->timestamps = false;
-        $createClient->save();
-
-
+        $this->createUser();
+        $this->createClient();
+        $this->createRole();
+        $this->createClientPermission();
     }
 
     public function testMissingName()

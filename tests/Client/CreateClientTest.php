@@ -16,24 +16,10 @@ class CreateClientTest extends TestCase
     public function setup()
     {
         parent::setup();
-        //Create a user for loggin in without permissions
-        $user = new User;
-        $user->name = 'Casper';
-        $user->email = 'bottelet@flarepoint.com';
-        $user->password = bcrypt('admin');
-        $user->save();
+        App::setLocale('en');
 
-        $this->role = new Role;
-        $this->role->display_name = 'Test role';
-        $this->role->name = 'Test Role';
-        $this->role->description = 'Role for testing';
-        $this->role->save();
- 
-        $newrole = new RoleUser;
-        $newrole->role_id = $this->role->id;
-        $newrole->user_id = $user->id;
-        $newrole->timestamps = false;
-        $newrole->save();
+        $this->createUser();
+        $this->createRole();
 
     }
 
@@ -53,13 +39,7 @@ class CreateClientTest extends TestCase
 
     public function testCanCreateClientWithPermission()
     {
-        $faker = \Faker\Factory::create();
-
-        $createClient = new PermissionRole;
-        $createClient->role_id = $this->role->id;
-        $createClient->permission_id = '4';
-        $createClient->timestamps = false;
-        $createClient->save();
+        $this->createClientPermission();
 
         $this->visit('/')
             ->seePageIs('/login')
@@ -69,17 +49,17 @@ class CreateClientTest extends TestCase
             ->see('Clients')
             ->click('New Client')
             ->seePageIs('/clients/create')
-            ->type($faker->name, 'name')
-            ->type($faker->email, 'email')
-            ->type($faker->address, 'address')
-            ->type($faker->randomNumber(8), 'vat')
-            ->type($faker->company('name'), 'company_name')
-            ->type($faker->randomNumber(4), 'zipcode')
-            ->type($faker->city(), 'city')
-            ->type($faker->randomNumber(8), 'primary_number')
-            ->type($faker->randomNumber(8), 'secondary_number')
-            ->type($faker->company('suffix'), 'company_type')
-            ->select($faker->numberBetween($min = 1, $max = 25), 'industry_id')
+            ->type($this->faker->name, 'name')
+            ->type($this->faker->email, 'email')
+            ->type($this->faker->address, 'address')
+            ->type($this->faker->randomNumber(8), 'vat')
+            ->type($this->faker->company('name'), 'company_name')
+            ->type($this->faker->randomNumber(4), 'zipcode')
+            ->type($this->faker->city(), 'city')
+            ->type($this->faker->randomNumber(8), 'primary_number')
+            ->type($this->faker->randomNumber(8), 'secondary_number')
+            ->type($this->faker->company('suffix'), 'company_type')
+            ->select($this->faker->numberBetween($min = 1, $max = 25), 'industry_id')
             ->select(1, 'fk_user_id')
             ->press('Create New Client')
             ->see('Client successfully added')

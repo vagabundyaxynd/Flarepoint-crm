@@ -7,6 +7,12 @@ class ForgotPasswordTest extends TestCase
 {
     use DatabaseTransactions;
 
+    public function setup()
+    {
+        parent::setup();
+        App::setLocale('en');
+    }
+
     public function testForgotPasswordWithWrongEmail()
     {
         $this->visit('/')

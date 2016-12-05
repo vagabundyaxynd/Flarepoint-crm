@@ -7,6 +7,13 @@ class LoginTest extends TestCase
 {
     use DatabaseTransactions;
 
+    public function setup()
+    {
+        parent::setup();
+        App::setLocale('en');
+    }
+
+
     public function testLoginWithWrongPassword()
     {
         $this->visit('/')
@@ -19,13 +26,7 @@ class LoginTest extends TestCase
 
     public function testLoginWithCorrectPassword()
     {  
-     //Create a user for loggin in
-        $user = new User;
-        $user->name = 'Casper';
-        $user->email = 'bottelet@flarepoint.com';
-        $user->password = bcrypt('admin');
-        $user->save();
-
+        $this->createUser();
         $this->visit('/')
             ->seePageIs('/login')
             ->type('bottelet@flarepoint.com', 'email')
