@@ -6,6 +6,7 @@ use App\Models\RoleUser;
 use App\Models\PermissionRole;
 use App\Models\Client;
 use App\Models\Department;
+use App\Models\Tasks;
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
@@ -15,6 +16,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     protected $faker;
     protected $user;
     protected $department;
+    protected $task;
 
     /**
      * The base URL to use while testing the application.
@@ -99,6 +101,31 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         $this->assignUserToDepartment();
     }
+
+    /**
+     * Create a test task
+     * @return Object
+     */
+    public function createTask($user_id = null, $client_id = null)
+    {
+        if ($user_id == null) {
+            $user_id = $this->user->id;
+        }
+        if ($client_id == null) {
+            $client_id = $this->client->id;
+        }
+
+        $this->task = new Tasks;
+        $this->task->title = $this->faker->sentence(3);
+        $this->task->description = $this->faker->paragraphs(2, true);
+        $this->task->deadline = $this->faker->dateTimeBetween('+1 week', '+1 month');
+        $this->task->fk_client_id = $client_id;
+        $this->task->fk_user_id_assign = $user_id;
+        $this->task->fk_user_id_created = $user_id;
+        $this->task->status = 1; //Status open
+        $this->task->save();
+    }
+
 
     protected function assignUserToRole()
     {
