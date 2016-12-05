@@ -1,22 +1,10 @@
   <?php
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Models\User;
-use App\Models\Role;
-use App\Models\RoleUser;
-use App\Models\PermissionRole;
-use App\Models\Client;
-use App\Models\Department;
 
 class Headertest extends TestCase
 {
     use DatabaseTransactions;
-
-    protected $client;
-    protected $role;
-    protected $faker;
-    protected $user;
-    protected $department;
 
     public function setup()
     {

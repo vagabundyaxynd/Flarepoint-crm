@@ -1,19 +1,10 @@
  <?php
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Models\User;
-use App\Models\Role;
-use App\Models\RoleUser;
-use App\Models\PermissionRole;
-use App\Models\Client;
 
 class FormValidationErrorClientTest extends TestCase
 {
     use DatabaseTransactions;
-
-    protected $client;
-    protected $role;
-    protected $faker;
 
     public function setup()
     {
@@ -85,7 +76,4 @@ class FormValidationErrorClientTest extends TestCase
             ->see('The company name field is required.')
             ->seePageIs('/clients/create');
     }
-
-
-
 }

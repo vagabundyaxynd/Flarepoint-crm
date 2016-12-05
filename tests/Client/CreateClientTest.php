@@ -1,17 +1,10 @@
  <?php
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Models\User;
-use App\Models\Role;
-use App\Models\RoleUser;
-use App\Models\PermissionRole;
 
 class CreateClientTest extends TestCase
 {
     use DatabaseTransactions;
-
-
-    protected $role;
 
     public function setup()
     {
@@ -64,6 +57,5 @@ class CreateClientTest extends TestCase
             ->press('Create New Client')
             ->see('Client successfully added')
             ->seePageIs('/clients');
-
     }
 }

@@ -1,11 +1,6 @@
  <?php
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Models\User;
-use App\Models\Role;
-use App\Models\RoleUser;
-use App\Models\PermissionRole;
-use App\Models\Client;
 
 class FormValidationErrorTaskTest extends TestCase
 {
@@ -17,7 +12,6 @@ class FormValidationErrorTaskTest extends TestCase
         App::setLocale('en');
 
         $this->createUser();
-        $this->createClient();
         $this->createRole();
         $this->createTaskPermission();
     }

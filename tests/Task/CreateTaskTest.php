@@ -1,17 +1,10 @@
 <?php
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Models\User;
-use App\Models\Role;
-use App\Models\RoleUser;
-use App\Models\PermissionRole;
 
-class CreateClientTest extends TestCase
+class CreateTaskTest extends TestCase
 {
     use DatabaseTransactions;
-
-
-    protected $role;
 
     public function setup()
     {
