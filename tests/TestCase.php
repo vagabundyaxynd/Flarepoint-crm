@@ -106,7 +106,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      * Create a test task
      * @return Object
      */
-    public function createTask($user_id = null, $client_id = null)
+    public function createTask($status, $user_id = null, $client_id = null)
     {
         if ($user_id == null) {
             $user_id = $this->user->id;
@@ -122,7 +122,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         $this->task->fk_client_id = $client_id;
         $this->task->fk_user_id_assign = $user_id;
         $this->task->fk_user_id_created = $user_id;
-        $this->task->status = 1; //Status open
+        $this->task->status = ($status == 'open' ? 1 : 2);
         $this->task->save();
     }
 
